@@ -20,6 +20,20 @@ class HTMLFormat:
         stream = BytesIO()
 
         page = markup.page()
+        csscustom = """
+        @media print {
+        tr:nth-child(even) td, tr:nth-child(even) th {
+          background-color: #ededed !important;
+          -webkit-print-color-adjust: exact;
+        }
+        @page {
+          size: A4 landscape;
+          font-size: 6pt;
+        }
+          img { height: 90%; margin: 0; padding: 0; }
+        }
+        """
+        page.style(csscustom)
         page.table.open()
 
         if dataset.headers is not None:
